@@ -1,7 +1,108 @@
 .App {
   text-align: center;
 }
+@font-face {
+  font-family: "Avantgarde";
+  src: url(../public/font.ttf) format("truetype");
+}
 
+.logo-font {
+  font-family: "Avantgarde";
+}
+
+.logo-back {
+  width: 900px;
+  position: absolute;
+}
+#wrapper {
+  position:relative;
+  width: 100vw;
+  height: 10vh;
+  max-width:100%;  /* added */
+  /*animation: logo-move 1 5s linear*/
+}
+.logo {
+  height: 1220px;
+  width: 900px;
+  position: relative;
+}
+
+.invisibleCard {
+  background-color: transparent !important;
+  border: rgba(0, 0, 0, 0) !important;
+  box-shadow: none !important;  
+}
+
+.cardAnimate {
+  transition: 
+    background-color 1s ease-in-out 4s, 
+    border 5s ease-in-out, 
+    box-shadow 1s ease-in-out !important;
+}
+
+.invisibleText {
+  opacity: 0;
+}
+
+.textAnimate {
+  transition: opacity 1s ease-in-out 4s !important
+}
+
+
+.logo-arbeitssaal {
+  position:absolute;
+  font-size: 171px;
+  font-weight: 600;
+  left: -500vw;
+  top: 10px
+
+}
+.logo-gatr {
+  position:absolute;
+  rotate: 270deg;
+  top: 650px;
+  left: -167px;
+  font-size: 374px;
+}
+.logo-obe {
+  font-size: 375px;
+  position:absolute;
+  rotate: -90deg;
+  transform-origin: 113.6px 316.4px;
+  top: 140px;
+  left: 104px;
+
+}
+
+.logo-gatrobe {
+  position: relative;
+  top: -500vh
+}
+
+/*
+.logo-arbeitssaal {
+  position:absolute;
+  font-size: 171px;
+  font-weight: 600;
+  left: 40px;
+  top: 10px
+
+}
+.logo-gatr {
+  position:absolute;
+  rotate: 270deg;
+  top: 650px;
+  left: -167px;
+  font-size: 374px;
+}
+.logo-obe {
+  font-size: 375px;
+  position:absolute;
+  top: 140px;
+  left: 104px;
+  transform-origin: 0% 0%;
+
+}*/
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -28,11 +129,26 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+/* Animation */
+@keyframes logo-move {
   from {
-    transform: rotate(0deg);
+    top: 50vw
   }
   to {
-    transform: rotate(360deg);
+    top: 0
+
   }
+}
+
+
+#mover {
+  position: relative;
+}
+
+.MuiPaper-root {
+  overflow: visible !important;
+}
+
+.MuiStack-root {
+  overflow: visible !important;
 }

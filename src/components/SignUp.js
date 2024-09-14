@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { animate, motion, useAnimate } from "framer-motion";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -47,13 +46,9 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignUp() {
-  const [scopeBox, animateBox] = useAnimate();
-  const [scopeText, animateText] = useAnimate();
   const [animationFinished, setIsAnimationFinished] = React.useState(false);
 
   const [mode, setMode] = React.useState('light');
-  const [showCustomTheme, setShowCustomTheme] = React.useState(true);
-  const defaultTheme = createTheme({ palette: { mode } });
   const SignUpTheme = createTheme(getSignUpTheme(mode));
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
@@ -76,15 +71,6 @@ export default function SignUp() {
     }
   }, []);
 
-  const toggleColorMode = () => {
-    const newMode = mode === 'dark' ? 'light' : 'dark';
-    setMode(newMode);
-    localStorage.setItem('themeMode', newMode); // Save the selected mode to localStorage
-  };
-
-  const toggleCustomTheme = () => {
-    setShowCustomTheme((prev) => !prev);
-  };
 
   const validateInputs = () => {
     const email = document.getElementById('email');
@@ -136,7 +122,7 @@ export default function SignUp() {
   
 
   return (
-    <ThemeProvider theme={showCustomTheme ? SignUpTheme : defaultTheme}>
+    <ThemeProvider theme={SignUpTheme}>
       <CssBaseline enableColorScheme />
 
       <SignUpContainer direction="column" justifyContent="space-between">

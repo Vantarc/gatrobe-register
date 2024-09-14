@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useAnimate } from "framer-motion";
-const delay = (delayInms) => {
-    return new Promise(resolve => setTimeout(resolve, delayInms));
-};
 
 export default function Logo(props) {
 
     const [scopeArbeitssaal, animateArbeitssaal] = useAnimate();
-    const [scopeGatr, animateGatr] = useAnimate();
     const [scopeObe, animateObe] = useAnimate();
     const [scopeGatrobe, animateGatrobe] = useAnimate();
     let normalHeight = 1220
@@ -36,7 +32,6 @@ export default function Logo(props) {
     }
     function adapt() {
         let el = document.getElementById('wrapper')
-        let log = document.getElementById('logo')
 
         let maxHeight = el.getBoundingClientRect().height
         let maxWidth = el.getBoundingClientRect().width
@@ -54,27 +49,23 @@ export default function Logo(props) {
 
 
     function calcScaleAndLocationPreAnimation() {
-        let log = document.getElementById('logo')
+        let rootElement = document.getElementById('root')
         let el = document.getElementById('wrapper')
-        let targetHeight = window.innerHeight * 0.8
+        let windowHeight = rootElement.getBoundingClientRect().height
+        let windowWidth = rootElement.getBoundingClientRect().width
+        let targetHeight = windowHeight * 0.8
         let neededScale = targetHeight / normalHeight
-        let maxWidth = window.innerWidth * 0.8
+        let maxWidth = windowWidth * 0.8
         if (normalWidth * neededScale > maxWidth) neededScale = maxWidth / normalWidth
         setScale(neededScale)
-        setX(-((normalWidth - neededScale * normalWidth) / 2) + (window.innerWidth - normalWidth * neededScale) / 2 - el.getBoundingClientRect().left)
-        setY(-((normalHeight - neededScale * normalHeight) / 2) + (window.innerHeight - normalHeight * neededScale) / 2 - el.getBoundingClientRect().top)
-        console.log("---")
-        console.log(-((window.innerWidth - normalWidth * neededScale) / 2))
-        console.log(window.innerWidth)
-        console.log(normalWidth * neededScale)
-        console.log(el.getBoundingClientRect().left)
-
+        setX(-((normalWidth - neededScale * normalWidth) / 2) + (windowWidth - normalWidth * neededScale) / 2 - el.getBoundingClientRect().left)
+        setY(-((normalHeight - neededScale * normalHeight) / 2) + (windowHeight - normalHeight * neededScale) / 2 - el.getBoundingClientRect().top)
     }
 
     useEffect(() => {
         calcScaleAndLocationPreAnimation()
         myAnimation();
-    }, []);
+    });
     return (
         <div id='wrapper'>
             <motion.div
@@ -88,7 +79,7 @@ export default function Logo(props) {
                 <motion.div ref={scopeArbeitssaal} className='logo-font logo-arbeitssaal'>Arbeitssaal</motion.div>
                 <motion.div ref={scopeGatrobe} className='logo-gatrobe'>
 
-                    <motion.div ref={scopeGatr} className='logo-font logo-gatr'>gatr</motion.div>
+                    <motion.div className='logo-font logo-gatr'>gatr</motion.div>
                     <motion.div ref={scopeObe} className='logo-font logo-obe'>obe</motion.div>
                 </motion.div>
 

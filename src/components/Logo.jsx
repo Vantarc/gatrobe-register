@@ -65,7 +65,7 @@ export default function Logo(props) {
     useEffect(() => {
         calcScaleAndLocationPreAnimation()
         myAnimation();
-    });
+    }, []);
     return (
         <div id='wrapper'>
             <motion.div

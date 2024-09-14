@@ -27,8 +27,8 @@ export default function Logo(props) {
             window.onresize = function () { adapt() }
             window.onload = function () { adapt() }
             adapt();
-            setTimeout(() => { setAnimate(false) }, 2000)
-        }, 3000)
+            setTimeout(() => { setAnimate(false) }, 1000)
+        }, 1000)
     }
     function adapt() {
         let el = document.getElementById('wrapper')
@@ -72,7 +72,7 @@ export default function Logo(props) {
                 className='logo'
                 id='logo'
                 animate={{ "left": x + "px", "top": y + "px", "transform": "scale(" + scale + ")" }}
-                transition={shouldAnimate ? { ease: "easeInOut", duration: 2 } : { duration: 0 }}
+                transition={shouldAnimate ? { ease: "easeInOut", duration: 1 } : { duration: 0 }}
 
             >
 

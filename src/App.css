@@ -35,8 +35,8 @@
 
 .cardAnimate {
   transition: 
-    background-color 1s ease-in-out 4s, 
-    border 5s ease-in-out, 
+    background-color 1s ease-in-out 2s, 
+    border 3s ease-in-out, 
     box-shadow 1s ease-in-out !important;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .textAnimate {
-  transition: opacity 1s ease-in-out 4s !important
+  transition: opacity 1s ease-in-out 2s !important
 }
 
 

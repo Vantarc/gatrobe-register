@@ -81,16 +81,16 @@ export default function SignUp(props) {
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+      setEmailErrorMessage('Bitte gib eine valide Email-Adresse ein.');
       isValid = false;
     } else {
       setEmailError(false);
       setEmailErrorMessage('');
     }
 
-    if (!password.value || password.value.length < 6) {
+    if (!password.value || password.value.length < 8) {
       setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      setPasswordErrorMessage('Das Passwort muss mindestens 8 Zeichen lang sein.');
       isValid = false;
     } else {
       setPasswordError(false);
@@ -99,8 +99,13 @@ export default function SignUp(props) {
 
     if (!name.value || name.value.length < 1) {
       setNameError(true);
-      setNameErrorMessage('Name is required.');
+      setNameErrorMessage('Bitte Namen eingeben.');
       isValid = false;
+    } else if (name.value.split(" ").length < 2){
+      setNameError(true);
+      setNameErrorMessage('Bitte Vor- und Nachname eingeben.');
+      isValid = false;
+
     } else {
       setNameError(false);
       setNameErrorMessage('');

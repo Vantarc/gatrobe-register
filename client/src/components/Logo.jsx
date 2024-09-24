@@ -63,8 +63,19 @@ export default function Logo(props) {
     }
 
     useEffect(() => {
-        calcScaleAndLocationPreAnimation()
-        myAnimation();
+        if(!props.animationFinished){
+            calcScaleAndLocationPreAnimation()
+            myAnimation();  
+        } else {
+            animateGatrobe(scopeGatrobe.current, {top: 0}, {duration: 0})
+            animateObe(scopeObe.current, { rotate: "-10deg" }, { duration: 0})
+            animateObe(scopeObe.current, { rotate: "90deg" }, { duration: 0})
+            animateArbeitssaal(scopeArbeitssaal.current, { left: "40px" }, { duration: 0})
+            window.onresize = function () { adapt() }
+            window.onload = function () { adapt() }
+            adapt();
+
+        }
     }, []);
     return (
         <div id='wrapper'>

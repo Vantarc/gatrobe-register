@@ -45,7 +45,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
   }),
 }));
 
-export default function SignUp() {
+export default function SignUp(props) {
   const [animationFinished, setIsAnimationFinished] = React.useState(false);
 
   const [mode, setMode] = React.useState('light');
@@ -112,14 +112,25 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get('name'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    fetch("/newregister/",
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+          name: data.get('name'),
+          email: data.get('email'),
+          password: data.get('password'),
+          allowNiere: data.has('allowniere')
+        })
+      })
+      .then(function (res) {})
+      .catch(function (res) { console.log(res) })
+      props.setRegisterFinished(true)
   };
-  
+
 
   return (
     <ThemeProvider theme={SignUpTheme}>
@@ -133,85 +144,86 @@ export default function SignUp() {
             p: 2,
           }}
         >
-            <Card className={animationFinished ? "cardAnimate" : "invisibleCard cardAnimate"} variant="outlined">
-              <Logo logoAnimationFinishCallback={() => {setIsAnimationFinished(true)}} animationFinished={animationFinished}/>
-              <div
-                className={animationFinished ? "textAnimate" : "invisibleText textAnimate"}
+          <Card className={animationFinished ? "cardAnimate" : "invisibleCard cardAnimate"} variant="outlined">
+            <Logo logoAnimationFinishCallback={() => { setIsAnimationFinished(true) }} animationFinished={animationFinished} />
+            <div
+              className={animationFinished ? "textAnimate" : "invisibleText textAnimate"}
+            >
+              <Typography
+                component="h1"
+                variant="h4"
+                sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', textAlign: 'center' }}
               >
-                <Typography
-                  component="h1"
-                  variant="h4"
-                  sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', textAlign: 'center' }}
-                >
-                  Account-Registrierung
-                </Typography>
+                Account-Registrierung
+              </Typography>
 
-                <Box
-                  component="form"
-                  onSubmit={handleSubmit}
-                  sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-                >
-                  <FormControl>
-                    <FormLabel htmlFor="name">Name</FormLabel>
-                    <TextField
-                      autoComplete="name"
-                      name="name"
-                      required
-                      fullWidth
-                      id="name"
-                      placeholder="Jon Snow"
-                      error={nameError}
-                      helperText={nameErrorMessage}
-                      color={nameError ? 'error' : 'primary'}
-                    />
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel htmlFor="email">Email</FormLabel>
-                    <TextField
-                      required
-                      fullWidth
-                      id="email"
-                      placeholder="your@email.com"
-                      name="email"
-                      autoComplete="email"
-                      variant="outlined"
-                      error={emailError}
-                      helperText={emailErrorMessage}
-                      color={passwordError ? 'error' : 'primary'}
-                    />
-                  </FormControl>
-                  <FormControl>
-                    <FormLabel htmlFor="password">Passwort</FormLabel>
-                    <TextField
-                      required
-                      fullWidth
-                      name="password"
-                      placeholder="••••••"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
-                      variant="outlined"
-                      error={passwordError}
-                      helperText={passwordErrorMessage}
-                      color={passwordError ? 'error' : 'primary'}
-                    />
-                  </FormControl>
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="Ich willige ein, der gatrobianischen IT-Abteilung meine Niere für die Anschaffung neuer Server zur Verfügung zu stellen."
-                  />
-                  <Button
-                    type="submit"
+              <Box
+                component="form"
+                onSubmit={handleSubmit}
+                sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+              >
+                <FormControl>
+                  <FormLabel htmlFor="name">Name</FormLabel>
+                  <TextField
+                    autoComplete="name"
+                    name="name"
+                    required
                     fullWidth
-                    variant="contained"
-                    onClick={validateInputs}
-                  >
-                    Registrieren
-                  </Button>
-                </Box>
-              </div>
+                    id="name"
+                    placeholder="Gatrobe User"
+                    error={nameError}
+                    helperText={nameErrorMessage}
+                    color={nameError ? 'error' : 'primary'}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel htmlFor="email">Email</FormLabel>
+                  <TextField
+                    required
+                    fullWidth
+                    id="email"
+                    placeholder="user@gatrobe.de"
+                    name="email"
+                    autoComplete="email"
+                    variant="outlined"
+                    error={emailError}
+                    helperText={emailErrorMessage}
+                    color={passwordError ? 'error' : 'primary'}
+                  />
+                </FormControl>
+                <FormControl>
+                  <FormLabel htmlFor="password">Passwort</FormLabel>
+                  <TextField
+                    required
+                    fullWidth
+                    name="password"
+                    placeholder="••••••"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                    variant="outlined"
+                    error={passwordError}
+                    helperText={passwordErrorMessage}
+                    color={passwordError ? 'error' : 'primary'}
+                  />
+                </FormControl>
+                <FormControlLabel
+                  htmlFor="allowniere"
+                  control={<Checkbox name="allowniere" color="primary" />}
+                  label="Ich willige ein, der gatrobianischen IT-Abteilung meine Niere für die Anschaffung neuer Server zur Verfügung zu stellen."
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  onClick={validateInputs}
+                >
+                  Registrieren
+                </Button>
+              </Box>
+            </div>
 
-            </Card>
+          </Card>
         </Stack>
       </SignUpContainer>
     </ThemeProvider >

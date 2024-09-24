@@ -101,11 +101,10 @@ export default function SignUp(props) {
       setNameError(true);
       setNameErrorMessage('Bitte Namen eingeben.');
       isValid = false;
-    } else if (name.value.split(" ").length < 2){
+    } else if (name.value.trim().split(" ").length < 2){
       setNameError(true);
       setNameErrorMessage('Bitte Vor- und Nachname eingeben.');
       isValid = false;
-
     } else {
       setNameError(false);
       setNameErrorMessage('');
@@ -115,6 +114,10 @@ export default function SignUp(props) {
   };
 
   const handleSubmit = (event) => {
+    if(!validateInputs()){
+      event.preventDefault();
+      return
+    }
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     fetch("/newregister/",

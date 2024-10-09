@@ -13,7 +13,7 @@ app.post('/newregister', async (req, res) => {
         req.body.name = req.body.name.trim()
         let lastIndexOfWhiteSpace = req.body.name.lastIndexOf(" ")
 
-        let x = await ipa.stageuser_add([req.body.name.replace(" ", "").toLowerCase()], {
+        let x = await ipa.stageuser_add([req.body.name.replaceAll(" ", "").toLowerCase()], {
             "givenname": req.body.name.substr(0, lastIndexOfWhiteSpace),
             "sn": req.body.name.substr(lastIndexOfWhiteSpace + 1),
             "cn": req.body.name,

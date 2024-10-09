@@ -43,6 +43,7 @@
 .global-wrap {
   max-height: 100vh;
   overflow: hidden;
+  font-family: "Avantgarde";
 }
 
 .invisibleText {

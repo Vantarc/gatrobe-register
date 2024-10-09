@@ -40,6 +40,10 @@
     border 3s ease-in-out, 
     box-shadow 1s ease-in-out !important;
 }
+.global-wrap {
+  max-height: 100vh;
+  overflow: hidden;
+}
 
 .invisibleText {
   opacity: 0;

@@ -21,12 +21,13 @@ app.post('/newregister', async (req, res) => {
             "userpassword": req.body.password,
             "krbpasswordexpiration": "99990924155614Z"
         }).then((e)=> {
-            if(e.error) throw Error()
+            if(e.error) throw Error(e)
             })
         console.log(x)
         await fetch("https://cms.gatrobe.de/flows/trigger/8007285b-9755-4247-b2b8-a0c46d078403")
         res.status(200).send("User created!");
     } catch (e) {
+        console.log(e)
         res.status(500).send("Something went wrong!");
     }
 

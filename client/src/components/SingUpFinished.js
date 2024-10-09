@@ -38,7 +38,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
     }),
 }));
 
-export default function SignUpFinished() {
+export default function SignUpFinished(props) {
     const animationFinished = true
     const [mode, setMode] = React.useState('light');
     const SignUpTheme = createTheme(getSignUpTheme(mode));
@@ -79,12 +79,12 @@ export default function SignUpFinished() {
                                 variant="h4"
                                 sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', textAlign: 'center' }}
                             >
-                                Registrierung erfolgreich!
+                                {props.text.split("!!!---!!!")[0]}
                             </Typography>
                             <Typography
                                 sx={{ width: '100%', textAlign: 'center' }}
                             >
-                                Wenn deine Registrierung von einem Admin genehmigt wurde, wirst du per Email benachrichtigt!
+                                {props.text.split("!!!---!!!")[1]}
                             </Typography>
                         </div>
 

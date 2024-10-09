@@ -4,11 +4,11 @@ import SignUp from './components/SignUp';
 import SignUpFinished from './components/SingUpFinished';
 
 function App() {
-  const [registerFinished, setRegisterFinished] = React.useState(false);
+  const [registerFinishedText, setRegisterFinishedText] = React.useState("");
 
   return (
     <div className="global-wrap">
-      {registerFinished ? <SignUpFinished /> : <SignUp setRegisterFinished={setRegisterFinished} />}
+      {registerFinishedText !== "" ? <SignUpFinished text={registerFinishedText}/> : <SignUp setRegisterFinishedText={setRegisterFinishedText} />}
 
     </div>
   );

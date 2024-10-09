@@ -133,10 +133,17 @@ export default function SignUp(props) {
           password: data.get('password'),
           allowNiere: data.has('allowniere')
         })
+      }).then((res) => {
+        if(!res.ok){
+          throw Error()
+        }
       })
-      .then(function (res) {})
-      .catch(function (res) { console.log(res) })
-      props.setRegisterFinished(true)
+      .then(function (res) {props.setRegisterFinishedText("Registrierung erfolgreich! !!!---!!!Wenn deine Registrierung von einem Admin genehmigt wurde, wirst du per Email benachrichtigt!")
+      })
+      .catch(function (res) {
+        console.log(res)
+        props.setRegisterFinishedText("Registrierung nicht erfolgreich! !!!---!!!Falls dieser Fehler mehrfach auftritt, wende dich bitte an it@gatrobe.de!")
+      })
   };
 
 

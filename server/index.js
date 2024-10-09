@@ -11,11 +11,11 @@ app.post('/newregister', async (req, res) => {
         await ipa.json_metadata()
 
         req.body.name = req.body.name.trim()
-        let names = req.body.name.split(" ")
+        let lastIndexOfWhiteSpace = req.body.name.splitAll(" ")
 
         let x = await ipa.stageuser_add([req.body.name.replace(" ", "").toLowerCase()], {
-            "givenname": names[0],
-            "sn": names[names.length - 1],
+            "givenname": names.substr(0, lastIndexOfWhiteSpace),
+            "sn": names.substr(lastIndexOfWhiteSpace + 1),
             "cn": req.body.name,
             "mail": req.body.email,
             "userpassword": req.body.password,

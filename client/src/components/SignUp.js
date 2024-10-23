@@ -13,6 +13,7 @@ import MuiCard from '@mui/material/Card';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import getSignUpTheme from './theme/getSignUpTheme';
 import Logo from './Logo';
+import LoadingScreen from './LoadingScreen';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -49,6 +50,7 @@ export default function SignUp(props) {
   const [animationFinished, setIsAnimationFinished] = React.useState(false);
 
   const [mode, setMode] = React.useState('light');
+  const [submitted, setSubmitted] = React.useState(false);
   const SignUpTheme = createTheme(getSignUpTheme(mode));
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
@@ -120,6 +122,11 @@ export default function SignUp(props) {
     }
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if(submitted){
+      return
+    }
+    setSubmitted(true)
+
     fetch("/newregister/",
       {
         headers: {
@@ -150,7 +157,7 @@ export default function SignUp(props) {
   return (
     <ThemeProvider theme={SignUpTheme}>
       <CssBaseline enableColorScheme />
-
+      {submitted ? <LoadingScreen/> : ""}
       <SignUpContainer direction="column" justifyContent="space-between">
         <Stack
           sx={{

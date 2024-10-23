@@ -31,7 +31,7 @@ app.post('/newregister', async (req, res) => {
             headers: {
               "prio": "low",
             },
-            body: `Es wurde ein neuer Nutzer mit der NutzerID ${req.body.name} und der Email ${req.body.email} von der IP ${ip} erstellt! `
+            body: `Es wurde ein neuer Nutzer mit der NutzerID ${req.body.name.replaceAll(" ", "").toLowerCase()} und der Email ${req.body.email} von der IP ${ip} erstellt! `
           });
         
         res.status(200).send("User created!");

@@ -6,13 +6,13 @@ app.use("/", express.static("../client/build"))
 const ipa = require('node-freeipa')
 
 app.post('/newregister', async (req, res) => {
+    var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
     try{
-
         await ipa.json_metadata()
 
         req.body.name = req.body.name.trim()
         let lastIndexOfWhiteSpace = req.body.name.lastIndexOf(" ")
-
+        
         let x = await ipa.stageuser_add([req.body.name.replaceAll(" ", "").toLowerCase()], {
             "givenname": req.body.name.substr(0, lastIndexOfWhiteSpace),
             "sn": req.body.name.substr(lastIndexOfWhiteSpace + 1),
@@ -26,8 +26,23 @@ app.post('/newregister', async (req, res) => {
             })
         console.log(x)
         await fetch("https://cms.gatrobe.de/flows/trigger/8007285b-9755-4247-b2b8-a0c46d078403")
+        fetch("https://ntfy.gatrobe.de/users", {
+            method: 'POST',
+            headers: {
+              "prio": "low",
+            },
+            body: `Es wurde ein neuer Nutzer mit der NutzerID ${req.body.name} und der Email ${req.body.email} von der IP ${ip} erstellt! `
+          });
+        
         res.status(200).send("User created!");
     } catch (e) {
+        fetch("https://ntfy.gatrobe.de/users", {
+            method: 'POST',
+            headers: {
+              "prio": "high",
+            },
+            body: `Es gab einen Fehler bei der Nutzererstellung für den Benutzer ${req.body.name} mit der Email ${req.body.email} von der IP ${ip}!`
+          });
         res.status(500).send("Something went wrong!");
     }
 

@@ -14,6 +14,10 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import getSignUpTheme from './theme/getSignUpTheme';
 import Logo from './Logo';
 import LoadingScreen from './LoadingScreen';
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from "@mui/material/InputAdornment";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -58,6 +62,18 @@ export default function SignUp(props) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleMouseUpPassword = (event) => {
+    event.preventDefault();
+  };
+
   // This code only runs on the client side, to determine the system color preference
   React.useEffect(() => {
     // Check if there is a preferred mode in localStorage
@@ -103,7 +119,7 @@ export default function SignUp(props) {
       setNameError(true);
       setNameErrorMessage('Bitte Namen eingeben.');
       isValid = false;
-    } else if (name.value.trim().split(" ").length < 2){
+    } else if (name.value.trim().split(" ").length < 2) {
       setNameError(true);
       setNameErrorMessage('Bitte Vor- und Nachname eingeben.');
       isValid = false;
@@ -116,13 +132,13 @@ export default function SignUp(props) {
   };
 
   const handleSubmit = (event) => {
-    if(!validateInputs()){
+    if (!validateInputs()) {
       event.preventDefault();
       return
     }
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    if(submitted){
+    if (submitted) {
       return
     }
     setSubmitted(true)
@@ -141,11 +157,12 @@ export default function SignUp(props) {
           allowNiere: data.has('allowniere')
         })
       }).then((res) => {
-        if(!res.ok){
+        if (!res.ok) {
           throw Error()
         }
       })
-      .then(function (res) {props.setRegisterFinishedText("Registrierung erfolgreich! !!!---!!!Wenn deine Registrierung von einem Admin genehmigt wurde, wirst du per Email benachrichtigt!")
+      .then(function (res) {
+        props.setRegisterFinishedText("Registrierung erfolgreich! !!!---!!!Wenn deine Registrierung von einem Admin genehmigt wurde, wirst du per Email benachrichtigt!")
       })
       .catch(function (res) {
         console.log(res)
@@ -157,7 +174,7 @@ export default function SignUp(props) {
   return (
     <ThemeProvider theme={SignUpTheme}>
       <CssBaseline enableColorScheme />
-      {submitted ? <LoadingScreen/> : ""}
+      {submitted ? <LoadingScreen /> : ""}
       <SignUpContainer direction="column" justifyContent="space-between">
         <Stack
           sx={{
@@ -220,13 +237,33 @@ export default function SignUp(props) {
                     fullWidth
                     name="password"
                     placeholder="••••••"
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     id="password"
                     autoComplete="new-password"
                     variant="outlined"
                     error={passwordError}
                     helperText={passwordErrorMessage}
                     color={passwordError ? 'error' : 'primary'}
+                    slotProps={{
+                      input: {
+                        endAdornment:
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label={
+                                showPassword ? 'hide the password' : 'display the password'
+                              }
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              onMouseUp={handleMouseUpPassword}
+                              edge="end"
+                              style={{ border: "none", backgroundColor: "transparent" }}
+                            >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+
+                      }
+                    }}
                   />
                 </FormControl>
                 <FormControlLabel

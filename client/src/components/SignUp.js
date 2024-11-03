@@ -99,7 +99,7 @@ export default function SignUp(props) {
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
-      setEmailErrorMessage('Bitte gib eine valide Email-Adresse ein.');
+      setEmailErrorMessage('Es wird eine valide Email-Adresse benötigt.');
       isValid = false;
     } else {
       setEmailError(false);
@@ -117,11 +117,11 @@ export default function SignUp(props) {
 
     if (!name.value || name.value.length < 1) {
       setNameError(true);
-      setNameErrorMessage('Bitte Namen eingeben.');
+      setNameErrorMessage('Bitte gib deinen Nachnamen ein.');
       isValid = false;
     } else if (name.value.trim().split(" ").length < 2) {
       setNameError(true);
-      setNameErrorMessage('Bitte Vor- und Nachname eingeben.');
+      setNameErrorMessage('Bitte gib deinen Vor- und Nachnamen ein.');
       isValid = false;
     } else {
       setNameError(false);
@@ -202,26 +202,26 @@ export default function SignUp(props) {
                 sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
               >
                 <FormControl>
-                  <FormLabel htmlFor="name">Name</FormLabel>
+                  <FormLabel htmlFor="name">Vollständiger Name*</FormLabel>
                   <TextField
                     autoComplete="name"
                     name="name"
                     required
                     fullWidth
                     id="name"
-                    placeholder="Gatrobe User"
+                    placeholder="Vorname Nachname"
                     error={nameError}
                     helperText={nameErrorMessage}
                     color={nameError ? 'error' : 'primary'}
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel htmlFor="email">Email</FormLabel>
+                  <FormLabel htmlFor="email">Email*</FormLabel>
                   <TextField
                     required
                     fullWidth
                     id="email"
-                    placeholder="user@gatrobe.de"
+                    placeholder="gatrobeuser@gmx.net"
                     name="email"
                     autoComplete="email"
                     variant="outlined"
@@ -231,7 +231,7 @@ export default function SignUp(props) {
                   />
                 </FormControl>
                 <FormControl>
-                  <FormLabel htmlFor="password">Passwort</FormLabel>
+                  <FormLabel htmlFor="password">Passwort*</FormLabel>
                   <TextField
                     required
                     fullWidth
@@ -279,6 +279,7 @@ export default function SignUp(props) {
                 >
                   Registrieren
                 </Button>
+
               </Box>
             </div>
 

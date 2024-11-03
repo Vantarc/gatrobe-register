@@ -22,7 +22,7 @@ app.post('/newregister', async (req, res) => {
             "givenname": req.body.name.substr(0, lastIndexOfWhiteSpace),
             "sn": req.body.name.substr(lastIndexOfWhiteSpace + 1),
             "cn": req.body.name,
-            "mail": req.body.email,
+            "mail": [ipaUID + "@gatrobe.de", req.body.email],
             "userpassword": req.body.password,
             "krbpasswordexpiration": "99990924155614Z"
         }).then((e)=> {

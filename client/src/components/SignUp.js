@@ -117,7 +117,7 @@ export default function SignUp(props) {
 
     if (!name.value || name.value.length < 1) {
       setNameError(true);
-      setNameErrorMessage('Bitte gib deinen Nachnamen ein.');
+      setNameErrorMessage('Bitte gib deinen Namen ein.');
       isValid = false;
     } else if (name.value.trim().split(" ").length < 2) {
       setNameError(true);

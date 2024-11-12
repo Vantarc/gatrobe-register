@@ -154,7 +154,7 @@ export default function SignUp(props) {
           name: data.get('name'),
           email: data.get('email'),
           password: data.get('password'),
-          allowNiere: data.has('allowniere')
+          //allowNiere: data.has('allowniere')
         })
       }).then((res) => {
         if (!res.ok) {
@@ -266,11 +266,11 @@ export default function SignUp(props) {
                     }}
                   />
                 </FormControl>
-                <FormControlLabel
+                {/* <FormControlLabel
                   htmlFor="allowniere"
                   control={<Checkbox name="allowniere" color="primary" />}
                   label="Ich willige ein, der gatrobianischen IT-Abteilung meine Niere für die Anschaffung neuer Server zur Verfügung zu stellen."
-                />
+                /> */}
                 <Button
                   type="submit"
                   fullWidth

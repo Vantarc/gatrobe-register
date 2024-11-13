@@ -61,7 +61,9 @@ app.listen(3000, () => {
         auth: {
             user: credentials.FREEIPA_USERNAME,
             pass: credentials.FREEIPA_PASSWORD
-        }
+        },
+            cacheFolder: "./credentials/",
+            expires: 60
     };
     ipa.configure(opts);
     console.log('server listening on port 3000')

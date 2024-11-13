@@ -4,7 +4,7 @@ const credentials = require("./credentials")
 app.use(express.json())
 app.use("/", express.static("../client/build"))
 const ipa = require('node-freeipa')
-
+var unidecode = require('unidecode');
 app.post('/newregister', async (req, res) => {
     var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
     try{
@@ -22,7 +22,7 @@ app.post('/newregister', async (req, res) => {
         ipaUID = ipaUID.replaceAll("é", "e")
         ipaUID = ipaUID.replaceAll("à", "a")
         ipaUID = ipaUID.replaceAll("á", "a")
-
+        ipaUID = unidecode(ipaUID)
         let x = await ipa.stageuser_add([ipaUID], {
             "givenname": req.body.name.substr(0, lastIndexOfWhiteSpace),
             "sn": req.body.name.substr(lastIndexOfWhiteSpace + 1),

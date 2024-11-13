@@ -17,7 +17,8 @@ app.post('/newregister', async (req, res) => {
         ipaUID = ipaUID.replaceAll("ü", "ue")
         ipaUID = ipaUID.replaceAll("ä", "ae")
         ipaUID = ipaUID.replaceAll("ö", "oe")
-        
+        ipaUID = ipaUID.replaceAll("ß", "ss")
+
         let x = await ipa.stageuser_add([ipaUID], {
             "givenname": req.body.name.substr(0, lastIndexOfWhiteSpace),
             "sn": req.body.name.substr(lastIndexOfWhiteSpace + 1),

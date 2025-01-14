@@ -12,8 +12,15 @@ app.post('/newregister', async (req, res) => {
 
         req.body.name = req.body.name.trim()
         let lastIndexOfWhiteSpace = req.body.name.lastIndexOf(" ")
+        let firstIndexOfWhiteSpace = req.body.name.indexOf(" ")
+
+        let giveName = req.body.name.substr(0, lastIndexOfWhiteSpace)
+        let lastName = req.body.name.substr(lastIndexOfWhiteSpace + 1)
         
-        let ipaUID = req.body.name.replaceAll(" ", "").toLowerCase()
+        let ipaUID = req.body.name.substr(0, firstIndexOfWhiteSpace).toLowerCase() + lastName.toLowerCase()
+        if(ipaUID.length > 32){
+            ipaUID = ipaUID.substr(0, 32)
+        }
         ipaUID = ipaUID.replaceAll("ü", "ue")
         ipaUID = ipaUID.replaceAll("ä", "ae")
         ipaUID = ipaUID.replaceAll("ö", "oe")
@@ -24,8 +31,8 @@ app.post('/newregister', async (req, res) => {
         ipaUID = ipaUID.replaceAll("á", "a")
         ipaUID = unidecode(ipaUID)
         let x = await ipa.stageuser_add([ipaUID], {
-            "givenname": req.body.name.substr(0, lastIndexOfWhiteSpace),
-            "sn": req.body.name.substr(lastIndexOfWhiteSpace + 1),
+            "givenname": giveName,
+            "sn": lastName,
             "cn": req.body.name,
             "mail": [ipaUID + "@gatrobe.de", req.body.email],
             "userpassword": req.body.password,

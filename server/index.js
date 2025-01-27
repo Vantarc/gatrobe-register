@@ -9,7 +9,7 @@ app.post('/newregister', async (req, res) => {
     var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
     try{
         await ipa.json_metadata()
-
+        console.log(req.body)
         req.body.name = req.body.name.trim()
         let lastIndexOfWhiteSpace = req.body.name.lastIndexOf(" ")
         let firstIndexOfWhiteSpace = req.body.name.indexOf(" ")
@@ -30,18 +30,30 @@ app.post('/newregister', async (req, res) => {
         ipaUID = ipaUID.replaceAll("à", "a")
         ipaUID = ipaUID.replaceAll("á", "a")
         ipaUID = unidecode(ipaUID)
-        let x = await ipa.stageuser_add([ipaUID], {
+        
+
+        console.log(ipaUID)
+        let response = await ipa.stageuser_add([ipaUID], {
             "givenname": giveName,
             "sn": lastName,
             "cn": req.body.name,
             "mail": [ipaUID + "@gatrobe.de", req.body.email],
             "userpassword": req.body.password,
-            "krbpasswordexpiration": "99990924155614Z"
+            "krbpasswordexpiration": "99990924155614Z",
+            "street": req.body.address,
+            "l": req.body.city,
+            "postalcode": req.body.postnumber,
+            "telephonenumber": [req.body.tel],
+            "userclass": [req.body.studyProgram, "Gatrobe"],
+            "carlicense": [req.body.birthdate, "DE"]
         }).then((e)=> {
             console.log(e)
+            console.log(e.desc)
             if(e.error) throw Error(e)
+                
+                
             })
-        console.log(x)
+        console.log(response)
         await fetch("https://cms.gatrobe.de/flows/trigger/8007285b-9755-4247-b2b8-a0c46d078403")
         fetch("https://ntfy.gatrobe.de/users", {
             method: 'POST',

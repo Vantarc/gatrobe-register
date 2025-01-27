@@ -153,8 +153,14 @@
 
 .MuiPaper-root {
   overflow: visible !important;
+  margin-top: 100px !important;
+  margin-bottom: 100px !important;
 }
 
 .MuiStack-root {
   overflow: visible !important;
+}
+
+.global-wrap {
+  overflow-y: scroll !important;
 }

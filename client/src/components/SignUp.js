@@ -246,8 +246,6 @@ export default function SignUp(props) {
     if (submitted) {
       return;
     }
-    console.log(data.keys().toArray())
-    console.log(data.values().toArray())
     setSubmitted(true);
 
     fetch("/newregister/", {
